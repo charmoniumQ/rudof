@@ -27,6 +27,15 @@ impl IriS {
     }
 
     /// Create an `IriS` from a file system path
+    #[cfg(
+        any(
+            unix,
+            windows,
+            target_os = "redox",
+            target_os = "wasi",
+            target_os = "hermit"
+        )
+    )]
     pub fn from_path(path: &Path) -> Result<IriS, IriSError> {
         let abs_path = if path.is_absolute() {
             Ok(path.to_path_buf())
